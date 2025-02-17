@@ -1,0 +1,138 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+body {
+    background: radial-gradient(circle, #9f9e9e 1%, transparent 10%) repeat;
+    background-size: 20px 20px;
+}
+
+body dialog {
+    position: fixed;
+    margin: auto;  
+}
+
+:root {
+    --main-color: #c31c46;
+    --secondary-color: #e3d5d8;
+    --support-color: #ffffff;
+}
+
+body .create-project {
+    position: fixed;
+    margin: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: var(--support-color);
+    
+}
+body .create-project:hover {
+    opacity: 0.8;
+}
+
+body .create-project:active {
+    transform: scale(0.90); 
+    cursor: pointer;
+}
+
+
+.header {
+    background-color: var(--main-color);
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100px;
+    justify-content: center;
+    color: var(--support-color);
+    text-transform: uppercase;
+    
+}
+
+.nav-bar {
+
+    margin: 2px;
+    color: var(--support-color);
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    
+}
+
+.nav-project {
+    min-width: fit-content;
+    max-width: 200px;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 10px
+}
+
+.nav-project:hover {
+    opacity: 0.8;
+}
+
+.nav-project:active {
+    transform: scale(0.90); 
+    cursor: pointer;
+}
+
+#content {
+    margin: 20px;
+    display: grid;
+    width: calc(100vw - 40px);
+    min-height: 100vh;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: repeat(3, 1fr); 
+
+    gap: 30px; 
+
+
+}
+.title {
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+
+
+}
+.column {
+    background: var(--secondary-color);
+    padding: 20px;
+    text-align: center;
+    border-radius: 30px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+
+}
+
+.column .task{
+    margin-top: 10px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    height: 200px;
+    background-color: var(--main-color);
+    color: var(--support-color);
+    font-size: 24px;
+    display: flex;
+    align-items: flex-start;
+
+}
