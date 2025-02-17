@@ -15,6 +15,12 @@ class Project {
         this.tasks.push(task);
     }
 
+    deleteTask(taskId) {
+        const taskToRemove = this.tasks.find(task => task.id === taskId);
+        this.tasks = this.tasks.filter(task => task.id !== taskId);
+        return taskToRemove;
+    }
+
     moveTask(taskId, newStatus) {
         const task = this.tasks.find(task => task.id === taskId);
         if (task && Project.projectColumns.includes(newStatus)) {
@@ -32,3 +38,5 @@ class Project {
         this.name = newName;
     }
 }
+
+export {Project};
