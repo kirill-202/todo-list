@@ -1,111 +1,88 @@
 import "./styles.css";
 import "./form.css";
-import {Project} from "./project-class.js"
+import { Project } from "./project-class.js";
 
-let CURRENT_PROJECT = {};
+let CURRENT_PROJECT = null;
 const PROJECTS = [];
 
 function createTaskElement(task) {
     const taskElement = document.createElement("div");
     taskElement.classList.add("task");
 
-    const title = document.createElement("h3");
-    title.textContent = task.title;
-
-    const description = document.createElement("p");
-    description.textContent = task.description || "No description";
-
-    const dueDate = document.createElement("p");
-    dueDate.textContent = task.dueDate ? `Due: ${task.dueDate.toDateString()}` : "No due date";
-
-    const priority = document.createElement("span");
-    priority.textContent = `Priority: ${task.priority}`;
-    priority.classList.add(`priority-${task.priority.toLowerCase()}`);
-
-    taskElement.appendChild(title);
-    taskElement.appendChild(description);
-    taskElement.appendChild(dueDate);
-    taskElement.appendChild(priority);
+    taskElement.innerHTML = `
+        <h3>${task.title}</h3>
+        <p>${task.description || "No description"}</p>
+        <p>${task.dueDate ? `Due: ${task.dueDate.toDateString()}` : "No due date"}</p>
+        <span class="priority-${task.priority.toLowerCase()}">Priority: ${task.priority}</span>
+    `;
 
     return taskElement;
 }
 
-function poplulateTasks(project) {
+function populateTasks(project) {
     const columns = document.querySelectorAll(".column");
-    columns.forEach((column) => {
-        
-        // change column id from to-do to To Do for a match.
-        let column_id_formatted = column.id.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
-        let matchedTasks = project.tasks.filter((task) => task.status === column_id_formatted);
-        matchedTasks.forEach((task) => {
-            let taskElem = createTaskElement(task);
-            column.appendChild(taskElem);
-        })
+    columns.forEach(column => {
+        column.innerHTML = ""; // Clear tasks before repopulating
+        let columnIdFormatted = column.id.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
 
-    })
+        project.tasks
+            .filter(task => task.status === columnIdFormatted)
+            .forEach(task => column.appendChild(createTaskElement(task)));
+    });
 }
 
 function handleSubmitProject(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
-    const projectName = document.getElementById("projectName").value;
-
-    if (projectName.trim() === "") {
+    const projectName = document.getElementById("projectName").value.trim();
+    if (!projectName) {
         alert("Project name cannot be empty!");
         return;
     }
 
     const project = new Project(projectName);
     PROJECTS.push(project);
-
     addProjectToNavBar(project);
+
     projectModal.close();
-    const form = document.getElementById("createProjectForm");
-    form.reset();  
+    document.getElementById("createProjectForm").reset();
 }
 
 function addProjectToNavBar(project) {
+    const navBar = document.querySelector(".nav-bar");
 
     const newNavBarProject = document.createElement("div");
     newNavBarProject.classList.add("nav-project");
     newNavBarProject.textContent = project.name;
-    newNavBarProject.id = project.id;
+    newNavBarProject.dataset.projectId = project.id;
 
-    const navBar = document.querySelector(".nav-bar");
     navBar.appendChild(newNavBarProject);
 }
 
 
-const newProjectButton = document.querySelector(".create-project");
-newProjectButton.addEventListener("click", () => {
-    projectModal.showModal();
+document.querySelector(".nav-bar").addEventListener("click", event => {
+    if (!event.target.classList.contains("nav-project")) return;
+
+    CURRENT_PROJECT = PROJECTS.find(project => project.id === event.target.dataset.projectId);
+    populateTasks(CURRENT_PROJECT);
 });
 
-const form = document.getElementById("createProjectForm");
-form.addEventListener("submit", handleSubmitProject);
 
-document.addEventListener("click", (event) =>  {
-    if (event.target.classList.contains("nav-project")) {
-        CURRENT_PROJECT = PROJECTS.find(project => project.id === event.target.id);
-        const columns = document.querySelectorAll(".column");
-        columns.forEach((column) => column.innerHTML = "");
-        poplulateTasks(CURRENT_PROJECT);
-    }
-}
-)
+document.querySelector(".create-project").addEventListener("click", () => projectModal.showModal());
+document.getElementById("createProjectForm").addEventListener("submit", handleSubmitProject);
 
 function init() {
     const defaultProject = new Project("Default");
     defaultProject.addTask("Finish report", "Write final report", "2025-03-01", "high", "Urgent task");
+
     CURRENT_PROJECT = defaultProject;
     PROJECTS.push(defaultProject);
-    poplulateTasks(defaultProject);
+    
     addProjectToNavBar(defaultProject);
+    populateTasks(defaultProject);
 
     console.log("Current Project:", CURRENT_PROJECT);
     console.log("All Projects:", PROJECTS);
-    console.log("Tasks in Current Project:", CURRENT_PROJECT.tasks);
-
 }
 
 init();
