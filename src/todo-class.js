@@ -11,7 +11,7 @@ class Task {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate ? new Date(dueDate) : null;
-        this.priority = ToDo.validatePriority(priority);
+        this.priority = Task.validatePriority(priority);
         this.notes = notes;
         this.project = project;
         this.status = "To Do";

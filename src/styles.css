@@ -17,6 +17,7 @@ body dialog {
 
 :root {
     --main-color: #c31c46;
+    --dark-color: #4d0e22;
     --secondary-color: #e3d5d8;
     --support-color: #ffffff;
 }
@@ -46,7 +47,7 @@ body .create-project:active {
 
 
 .header {
-    background-color: var(--main-color);
+    background: var(--main-color);
     font-size: 40px;
     display: flex;
     align-items: center;
@@ -134,5 +135,50 @@ body .create-project:active {
     font-size: 24px;
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 5px;
 
+
+}
+
+.column .task:hover {
+    transform: translateY(-3px); 
+}
+
+.column .task > * {
+    background-color: var(--support-color);
+    border-radius: 6px;
+    font-size: 18px;
+    color: black;
+    width: 100%;
+    border: 1px solid black;
+    
+
+}
+
+.column .task h3 {
+    font-size: 22px;
+    font-weight: bold;
+    width:auto;
+    align-self: center;
+    padding: 5px;
+    background-color: var(--main-color);
+    color: var(--support-color);
+    border: none;
+    
+}
+
+.column .task p {
+    font-size: 16px;
+    opacity: 0.8;
+    min-height: 50px;
+}
+
+.column .task span {
+    font-weight: bold;
+    color: var(--highlight-color, #ff6347); 
+    width:auto;
+    align-self: flex-end;
+    padding: 5px;
 }
