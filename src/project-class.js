@@ -12,6 +12,7 @@ class Project {
     addTask(title, description = "", dueDate = "", priority = "low", notes = "") {
         const task = new Task(title, this, description, dueDate, priority, notes);
         this.tasks.push(task);
+        return task;
     }
 
     deleteTask(taskId) {

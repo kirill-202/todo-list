@@ -1,5 +1,6 @@
 import { Project } from "./project-class.js";
-import { populateTasks, addProjectToNavBar } from "./dom-utils.js";
+import { Task } from "./task-class.js";
+import { populateTasks, addProjectToNavBar, createTaskElement } from "./dom-utils.js";
 
 function openNewProjectForm() {
     document.querySelector(".create-project").addEventListener("click", () => projectModal.showModal());
@@ -8,6 +9,35 @@ function openNewProjectForm() {
 function submitNewProject(projects) {
     document.getElementById("createProjectForm").addEventListener("submit", (event) => _handleSubmitProject(event, projects));
 }
+
+function openNewTaskForm() {
+    document.querySelector(".create-task").addEventListener("click", () => taskModal.showModal());
+
+}
+
+function closeNewTaskForm() {
+    document.querySelector("#closeTaskModal").addEventListener("click", () => taskModal.close());
+}
+
+function _handleSubmitTask(event, project) {
+    event.preventDefault();
+
+    const title = document.getElementById("taskTitle").value.trim();
+    const description = document.getElementById("taskDescription").value.trim();
+    const dueDate = document.getElementById("taskDueDate").value; 
+    const priority = document.getElementById("taskPriority").value;
+
+    const task = project.addTask(title, description, dueDate, priority);
+    createTaskElement(task);
+    populateTasks(project);
+    taskModal.close()
+    document.getElementById("createTaskForm").reset();
+
+}
+
+function submitNewTask(setCurrentProject) {
+    document.getElementById("createTaskForm").addEventListener("submit", (event) => _handleSubmitTask(event, setCurrentProject()));
+} 
 
 function _handleSubmitProject(event, projects) {
     event.preventDefault();
@@ -29,6 +59,8 @@ function _handleSubmitProject(event, projects) {
 function populateCurrentProjectTasks(setCurrentProject, projects) {
     document.querySelector(".nav-bar").addEventListener("click", event => {
         if (!event.target.classList.contains("nav-project")) return;
+        document.querySelectorAll(".nav-project").forEach(projectTab => projectTab.classList.remove("active-project"));
+        event.target.classList.add("active-project");
 
         const project = projects.find(p => p.id === event.target.dataset.projectId);
         if (project) {
@@ -59,4 +91,4 @@ function changeTaskStatus(getCurrPorject) {
     });
 }
 
-export { openNewProjectForm, submitNewProject, populateCurrentProjectTasks, changeTaskStatus };
+export { openNewProjectForm, submitNewProject, populateCurrentProjectTasks, changeTaskStatus, submitNewTask, closeNewTaskForm, openNewTaskForm };

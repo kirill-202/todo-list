@@ -15,6 +15,30 @@
         </form>
     </dialog>
     <header class="header">To Do List</header>
+    <button class="create-task">+</button>
+    <dialog id="taskModal">
+        <form id="createTaskForm">
+            <h2>Create New Task</h2>
+    
+            <label for="taskTitle">Task Title:</label>
+            <input type="text" id="taskTitle" required placeholder="Enter task title">
+    
+            <label for="taskDescription">Description:</label>
+            <textarea id="taskDescription" placeholder="Enter task description"></textarea>
+    
+            <label for="taskDueDate">Due Date:</label>
+            <input type="date" id="taskDueDate" required>
+    
+            <label for="taskPriority">Priority:</label>
+            <select id="taskPriority" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit">Add Task</button>
+            <button type="button" id="closeTaskModal">Cancel</button>
+        </form>
+    </dialog>
     <nav class="nav-bar"></nav>
     <div id="content" class="content">
         <div class="title">To Do</div>
