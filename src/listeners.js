@@ -6,22 +6,10 @@ function openNewProjectForm() {
 }
 
 function submitNewProject(projects) {
-    document.getElementById("createProjectForm").addEventListener("submit", (event) => handleSubmitProject(event, projects));
+    document.getElementById("createProjectForm").addEventListener("submit", (event) => _handleSubmitProject(event, projects));
 }
 
-function populateCurrentProjectTasks(setCurrentProject, projects) {
-    document.querySelector(".nav-bar").addEventListener("click", event => {
-        if (!event.target.classList.contains("nav-project")) return;
-
-        const project = projects.find(p => p.id === event.target.dataset.projectId);
-        if (project) {
-            setCurrentProject(project);
-            populateTasks(project);
-        }
-    });
-}
-
-function handleSubmitProject(event, projects) {
+function _handleSubmitProject(event, projects) {
     event.preventDefault();
 
     const projectName = document.getElementById("projectName").value.trim();
@@ -38,4 +26,37 @@ function handleSubmitProject(event, projects) {
     document.getElementById("createProjectForm").reset();
 }
 
-export { openNewProjectForm, submitNewProject, populateCurrentProjectTasks };
+function populateCurrentProjectTasks(setCurrentProject, projects) {
+    document.querySelector(".nav-bar").addEventListener("click", event => {
+        if (!event.target.classList.contains("nav-project")) return;
+
+        const project = projects.find(p => p.id === event.target.dataset.projectId);
+        if (project) {
+            setCurrentProject(project);
+            populateTasks(project);
+        }
+    });
+}
+
+function changeTaskStatus(getCurrPorject) {
+    document.addEventListener("change", (event) => {
+        if (event.target.classList.contains("task-status")) {
+            const taskElement = event.target.closest(".task");
+            console.log("Task Element ID:", taskElement.id);
+            if (!taskElement) return;
+            const project = getCurrPorject();
+            const task = project.getTask(taskElement.id);
+            task.changeTaskStatus(event.target.value);
+
+            const targetColumnId = task.status.toLowerCase().replace(" ", "-");
+            console.log(targetColumnId);
+
+            const targetColumn = document.getElementById(targetColumnId);
+            if (targetColumn) {
+                targetColumn.appendChild(taskElement);
+            }
+        }
+    });
+}
+
+export { openNewProjectForm, submitNewProject, populateCurrentProjectTasks, changeTaskStatus };

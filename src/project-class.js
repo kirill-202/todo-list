@@ -1,8 +1,7 @@
 
-import {Task} from "./todo-class.js";
+import {Task} from "./task-class.js";
 
 class Project {
-    static projectColumns = ["To Do", "In Progress", "Done"];
 
     constructor(name) {
         this.name = name;
@@ -21,14 +20,6 @@ class Project {
         return taskToRemove;
     }
 
-    moveTask(taskId, newStatus) {
-        const task = this.tasks.find(task => task.id === taskId);
-        if (task && Project.projectColumns.includes(newStatus)) {
-            task.changeTaskStatus(newStatus);
-        } else {
-            console.error("Invalid status or task not found");
-        }
-    }
 
     getTask(taskId) {
         return this.tasks.find(task => task.id === taskId);

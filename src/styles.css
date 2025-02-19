@@ -129,7 +129,10 @@ body .create-project:active {
     border-radius: 20px;
     padding: 20px;
     width: 90%;
-    height: 200px;
+    min-height: 200px;
+    height: auto;
+    max-height: 100%;
+
     background-color: var(--main-color);
     color: var(--support-color);
     font-size: 24px;
@@ -149,36 +152,54 @@ body .create-project:active {
 .column .task > * {
     background-color: var(--support-color);
     border-radius: 6px;
-    font-size: 18px;
-    color: black;
-    width: 100%;
+    font-size: 16px;
     border: 1px solid black;
     
 
 }
 
-.column .task h3 {
+.column .task .task-title {
+    width: fit-content;
     font-size: 22px;
     font-weight: bold;
-    width:auto;
     align-self: center;
     padding: 5px;
     background-color: var(--main-color);
     color: var(--support-color);
     border: none;
+    text-align: center;
     
 }
 
-.column .task p {
+.column .task .task-description {
     font-size: 16px;
     opacity: 0.8;
-    min-height: 50px;
+    width: 100%; 
+    max-width: 100%; 
+    min-height: 100px;
+    max-height: calc(100px * 3);
+    overflow-wrap: break-word; 
+    word-wrap: break-word; 
+    white-space: normal; 
+    resize: vertical;
+    overflow: auto;
+
 }
 
-.column .task span {
-    font-weight: bold;
-    color: var(--highlight-color, #ff6347); 
-    width:auto;
-    align-self: flex-end;
-    padding: 5px;
+.column .task .due-date-container {
+    border: none;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+}
+
+.column .task .task-priority, .column .task .task-status{
+    align-self: end;
+    width: 120px;
+    text-align: center;
+    padding: 2px;
+    opacity: 0.8;
+    border: none;
 }

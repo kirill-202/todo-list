@@ -7,12 +7,11 @@ class Task {
         return validPriorities.includes(priority) ? priority : "low";
     }
 
-    constructor(title, project, description = "", dueDate = "", priority = "low", notes = "") {
+    constructor(title, project, description = "", dueDate = "", priority = "low") {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate ? new Date(dueDate) : null;
         this.priority = Task.validatePriority(priority);
-        this.notes = notes;
         this.project = project;
         this.status = "To Do";
         this.id = crypto.randomUUID(); 
@@ -30,11 +29,6 @@ class Task {
 
     setPriority(newPriority) {
         this.priority = Task.validatePriority(newPriority);
-        return this;
-    }
-
-    setNotes(newNotes) {
-        this.notes = newNotes;
         return this;
     }
 
